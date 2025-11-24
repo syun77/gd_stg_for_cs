@@ -1,3 +1,15 @@
 {
-    "godotTools.editorPath.godot4": "/Applications/Godot_mono.app"
+    "godotTools.editorPath.godot4": "/Applications/Godot_mono.app",
+    "omnisharp.useModernNet": false,
+    "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+    "dotnet.server.useOmnisharp": true,
+    "files.exclude": {
+        "**/.godot/": true,
+        "**/bin/": true,
+        "**/obj/": true,
+        "**/.tmp/": true
+    },
+    "godotFiles.showProjectSettingsInGutter": true,
+    "csharp.semanticHighlighting.enabled": true,
+    "csharp.format.enable": true
 }

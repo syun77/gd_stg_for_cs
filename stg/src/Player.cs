@@ -3,6 +3,8 @@ using System;
 
 public partial class Player : Area2D
 {
+	[Export]
+	public PackedScene ShotScene;
 	private Sprite2D _spr;
 	private const float MOVE_SPEED = 500f;
 	public override void _Ready()
@@ -14,6 +16,14 @@ public partial class Player : Area2D
         _spr.Rotation += 1f * (float)delta;
 		// 移動.
 		_UpdateMove(delta);
+		// ショット.
+		if(Input.IsActionPressed("ui_accept"))
+        {
+            var shot = ShotScene.Instantiate<Shot>();
+			shot.Position = Position;
+			shot.velocity = new Vector2(0, -1000);
+			Common.Instance.AddLayerChild("shot", shot);
+        }
     }
 
 	/// <summary>
@@ -39,6 +49,17 @@ public partial class Player : Area2D
 			direction.Y -= 1;
 		}
 		direction = direction.Normalized();
-		Position += direction * MOVE_SPEED * (float)delta;
+		Vector2 newPosition = Position + direction * MOVE_SPEED * (float)delta;
+		
+		// Commonクラスを使用して画面内に座標を制限
+		if (Common.Instance != null)
+		{
+			Vector2 spriteSize = _spr.Texture.GetSize();
+			Position = Common.Instance.ClampToScreen(newPosition, spriteSize);
+		}
+		else
+		{
+			Position = newPosition;
+		}
 	}
 }

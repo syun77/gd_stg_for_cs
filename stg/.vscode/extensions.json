@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "geequlim.godot-tools",
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.vscode-dotnet-runtime",
+        "formulahendry.code-runner"
+    ]
+}

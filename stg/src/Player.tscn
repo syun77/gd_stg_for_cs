@@ -1,13 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://cbqkwdkfgor1d"]
+[gd_scene load_steps=5 format=3 uid="uid://cbqkwdkfgor1d"]
 
 [ext_resource type="Script" uid="uid://ctj8ej0ujl17a" path="res://src/Player.cs" id="1_5b12s"]
 [ext_resource type="Texture2D" uid="uid://dovojcmblwjr2" path="res://assets/images/player.png" id="1_laulw"]
+[ext_resource type="PackedScene" uid="uid://b6mdmrjnmwvsh" path="res://src/Shot.tscn" id="2_n57y7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5b12s"]
 radius = 8.0
 
 [node name="Player" type="Area2D"]
 script = ExtResource("1_5b12s")
+ShotScene = ExtResource("2_n57y7")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(-4.7683716e-07, 4.7683716e-07)

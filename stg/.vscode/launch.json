@@ -1,0 +1,48 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Play in Editor",
+            "type": "godot-mono",
+            "mode": "play",
+            "request": "launch"
+        },
+        {
+            "name": "Launch (Standalone)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "/Applications/Godot_mono.app/Contents/MacOS/Godot",
+            "args": [
+                "--path",
+                "${workspaceRoot}",
+                "--debug-collisions",
+                "--debug-navigation"
+            ],
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Launch Scene (Standalone)",
+            "type": "coreclr", 
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "/Applications/Godot_mono.app/Contents/MacOS/Godot",
+            "args": [
+                "--path",
+                "${workspaceRoot}",
+                "${workspaceRoot}/src/Main.tscn",
+                "--debug-collisions",
+                "--debug-navigation"
+            ],
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Attach",
+            "type": "godot-mono",
+            "mode": "attach",
+            "request": "attach"
+        }
+    ]
+}
