@@ -14,3 +14,9 @@ position = Vector2(240, 608)
 [node name="EnemyLayer" type="CanvasLayer" parent="."]
 
 [node name="BulletLayer" type="CanvasLayer" parent="."]
+
+[node name="CanvasUI" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasUI"]
+offset_right = 40.0
+offset_bottom = 23.0

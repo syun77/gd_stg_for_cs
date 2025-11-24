@@ -6,7 +6,6 @@ public partial class Shot : Area2D
 	public Vector2 velocity = Vector2.Zero;
 	public override void _Ready()
     {
-        GD.Print("shot ready");
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

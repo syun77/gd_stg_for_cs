@@ -57,6 +57,11 @@ public partial class Common : Node
         var layer = GetLayer(name);
         layer.AddChild(obj);
     }
+    public int GetLayerChildCount(string name)
+    {
+        var layer = GetLayer(name);
+        return layer.GetChildCount();
+    }
 
     /// <summary>
     /// スコアを加算
