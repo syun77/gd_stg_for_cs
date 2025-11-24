@@ -7,16 +7,19 @@ public partial class Player : Area2D
 	public PackedScene ShotScene;
 	private Sprite2D _spr;
 	private int _shotCnt = 0;
-	private const float MOVE_SPEED = 500f;
+	private const float MOVE_SPEED = 300f;
+	private const float MOVE_SPEED_SLOW = 100f;
 	public override void _Ready()
     {
 		_spr = GetNode<Sprite2D>("Sprite");
     }
 	public override void _Process(double delta)
     {
-        _spr.Rotation += 1f * (float)delta;
 		// 移動.
 		_UpdateMove(delta);
+
+		var rotSpeed = 2f * (float)delta;
+
 		// ショット.
 		if(Input.IsActionPressed("ui_accept"))
         {
@@ -29,7 +32,11 @@ public partial class Player : Area2D
 			shot.SetSpeed(deg, 1500);
 			Common.Instance.AddLayerChild("shot", shot);
 			_shotCnt++;
+
+			rotSpeed *= 0.5f;
         }
+
+        _spr.Rotation += rotSpeed;
     }
 
 	/// <summary>
@@ -55,7 +62,12 @@ public partial class Player : Area2D
 			direction.Y -= 1;
 		}
 		direction = direction.Normalized();
-		Vector2 newPosition = Position + direction * MOVE_SPEED * (float)delta;
+		var speed = MOVE_SPEED;
+		if(Input.IsActionPressed("ui_accept")) {
+			// 長押しで移動速度低下.
+			speed = MOVE_SPEED_SLOW;
+		}
+		Vector2 newPosition = Position + direction * speed * (float)delta;
 		
 		// Commonクラスを使用して画面内に座標を制限
 		if (Common.Instance != null)

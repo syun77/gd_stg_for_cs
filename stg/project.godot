@@ -24,6 +24,7 @@ Common="*res://src/Common.cs"
 window/size/viewport_width=480
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
+window/dpi/allow_hidpi=false
 
 [dotnet]
 
