@@ -28,7 +28,7 @@ public partial class Player : Area2D
 			if(_shotCnt%2 == 0) {
 				shot.Position += new Vector2(0, -16);
 			}
-			var deg = 90+Random.Shared.Next(-5, 5);
+			var deg = 90+Common.RanfFloat(-5, 5);
 			shot.SetSpeed(deg, 1500);
 			Common.Instance.AddLayerChild("shot", shot);
 			_shotCnt++;
