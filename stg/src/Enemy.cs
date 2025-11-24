@@ -60,14 +60,14 @@ public partial class Enemy : Area2D
 	public override void _PhysicsProcess(double delta)
     {
         _timer += (float)delta;
-		if(_timer > 1)
+		if(_timer > 3)
         {
-            _timer -= 1;
+            _timer -= 3;
 
 			// 3回ループする
-			for(int i = 0; i < 3; i++)
+			for(int i = 0; i < 5; i++)
             {
-				_Bullet(_GetAim(), 500, i*0.05f);
+				_NWay(3, _GetAim(), 30, 100 + (i * 20), i*0.2f);
             }
         }
 
@@ -119,5 +119,29 @@ public partial class Enemy : Area2D
     {
         var b = new DelayedBatteryInfo(deg, speed, delay, ax, ay);
 		_batteries.Add(b);
+    }
+
+	/// <summary>
+	/// N-Wayを撃つ
+	/// </summary>
+	/// <param name="n">発射数.</param>
+	/// <param name="center">中心角度.</param>
+	/// <param name="wide">範囲.</param>
+	/// <param name="speed">速度.</param>
+	/// <param name="delay">発射遅延時間 (秒).</param>
+	private void _NWay(int n, float center, float wide, float speed, float delay=0.0f)
+    {        
+		if (n < 1)
+        {
+			return; // 発射しない.            
+        }
+		
+		var d = wide / n; // 弾の間隔
+		var a = center - (d * 0.5f * (n - 1)); // 開始角度
+		for (int i = 0; i < n; i++)
+        {
+			_Bullet(a, speed, delay);
+			a += d;
+        }
     }
 }
