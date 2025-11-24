@@ -273,12 +273,12 @@ public partial class Common : Node
     }
 
     // 範囲指定で乱数を返す (整数値).
-    public static int RandInt(int aMin, int bMax)
+    public static int RandIRange(int aMin, int bMax)
     {
         return Random.Shared.Next(aMin, bMax);
     }
     // 範囲指定で乱数を返す (浮動小数点数).
-    public static float RanfFloat(float aMin, float bMax)
+    public static float RandFRange(float aMin, float bMax)
     {
         return (float)(Random.Shared.NextDouble() * (bMax - aMin) + aMin);
     }
