@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Runtime;
+using System.Runtime.CompilerServices;
 
 public partial class Player : Area2D
 {
@@ -78,6 +80,14 @@ public partial class Player : Area2D
 		else
 		{
 			Position = newPosition;
+		}
+	}
+
+	private void OnAreaEntered(Area2D target)
+	{
+		if(target is Bullet) {
+			// 敵弾のみ衝突処理.
+			target.QueueFree();
 		}
 	}
 }

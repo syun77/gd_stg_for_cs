@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Runtime;
 
 /// <summary>
 /// 敵弾クラス.
@@ -144,4 +145,14 @@ public partial class Enemy : Area2D
 			a += d;
         }
     }
+
+	private void OnAreaEntered(Area2D target)
+	{
+		if(target is Shot)
+        {
+			// ショットのみ衝突処理.
+            target.QueueFree();
+        }
+	}
+
 }
