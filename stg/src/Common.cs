@@ -271,6 +271,16 @@ public partial class Common : Node
             (float)Math.Sin(rad) * -speed
         );
     }
+    public static float ToAngle(Vector2 v)
+    {
+        var d = Math.Atan2(-v.Y, v.X);
+        // ラジアンを角度に変換する.
+        return (float)(d * 180.0 / Math.PI);
+    }
+    public static float ToSpeed(Vector2 v)
+    {
+        return v.Length();
+    }
 
     // 範囲指定で乱数を返す (整数値).
     public static int RandIRange(int aMin, int bMax)

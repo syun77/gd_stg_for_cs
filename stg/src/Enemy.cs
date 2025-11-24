@@ -150,6 +150,12 @@ public partial class Enemy : Area2D
 	{
 		if(target is Shot)
         {
+			var obj = target as Shot;
+			var deg = Common.ToAngle(obj.velocity);
+			deg -= 180 + Common.RandFRange(-30, 30);
+			var speed = Common.ToSpeed(obj.velocity);
+			speed *= Common.RandFRange(0.2f, 0.5f);
+			Particle.Add(obj.Position, deg, speed, new Godot.Color(0.5f, 0.5f, 1, 1));
 			// ショットのみ衝突処理.
             target.QueueFree();
         }

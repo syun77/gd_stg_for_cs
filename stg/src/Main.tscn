@@ -23,6 +23,8 @@ position = Vector2(240, 168)
 
 [node name="BulletLayer" type="CanvasLayer" parent="."]
 
+[node name="ParticleLayer" type="CanvasLayer" parent="."]
+
 [node name="CanvasUI" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="CanvasUI"]

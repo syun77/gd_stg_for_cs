@@ -17,6 +17,7 @@ public partial class Main : Node2D
 		Common.Instance.AddLayer("shot", GetNode<CanvasLayer>("ShotLayer"));
 		Common.Instance.AddLayer("enemy", GetNode<CanvasLayer>("EnemyLayer"));
 		Common.Instance.AddLayer("bullet", GetNode<CanvasLayer>("BulletLayer"));
+		Common.Instance.AddLayer("particle", GetNode<CanvasLayer>("ParticleLayer"));
 
 		_text = GetNode<Label>("CanvasUI/Label");
     }
@@ -25,5 +26,6 @@ public partial class Main : Node2D
     {
 		_text.Text = "Shot: " + Common.Instance.GetLayerChildCount("shot").ToString();
 		_text.Text += "\nBullet: " + Common.Instance.GetLayerChildCount("bullet").ToString();
+		_text.Text += "\nParticle: " + Common.Instance.GetLayerChildCount("particle").ToString();
     }
 }

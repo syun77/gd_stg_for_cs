@@ -86,6 +86,12 @@ public partial class Player : Area2D
 	private void OnAreaEntered(Area2D target)
 	{
 		if(target is Bullet) {
+			var obj = target as Bullet;
+			var deg = Common.ToAngle(obj.velocity);
+			deg -= 180 + Common.RandFRange(-30, 30);
+			var speed = Common.ToSpeed(obj.velocity);
+			Particle.Add(obj.Position, deg, speed, new Godot.Color(1, 0.5f, 0.5f, 1));
+
 			// 敵弾のみ衝突処理.
 			target.QueueFree();
 		}

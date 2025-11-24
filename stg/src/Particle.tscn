@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ba1mwu21ppbf0"]
+
+[ext_resource type="Texture2D" uid="uid://doopbterhcksq" path="res://assets/images/particle.png" id="1_6gydx"]
+[ext_resource type="Script" uid="uid://b750n8hr6jt0l" path="res://src/Particle.cs" id="1_8ceqp"]
+
+[node name="Particle" type="Sprite2D"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_6gydx")
+script = ExtResource("1_8ceqp")
