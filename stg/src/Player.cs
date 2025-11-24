@@ -6,6 +6,7 @@ public partial class Player : Area2D
 	[Export]
 	public PackedScene ShotScene;
 	private Sprite2D _spr;
+	private int _shotCnt = 0;
 	private const float MOVE_SPEED = 500f;
 	public override void _Ready()
     {
@@ -21,8 +22,13 @@ public partial class Player : Area2D
         {
             var shot = ShotScene.Instantiate<Shot>();
 			shot.Position = Position;
-			shot.velocity = new Vector2(0, -1000);
+			if(_shotCnt%2 == 0) {
+				shot.Position += new Vector2(0, -16);
+			}
+			var deg = 90+Random.Shared.Next(-5, 5);
+			shot.SetSpeed(deg, 1500);
 			Common.Instance.AddLayerChild("shot", shot);
+			_shotCnt++;
         }
     }
 

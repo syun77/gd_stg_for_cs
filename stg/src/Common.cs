@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Runtime;
 
 /// <summary>
 /// どこからでもアクセスできる共通クラス
@@ -28,6 +29,8 @@ public partial class Common : Node
     /// </summary>
     public int Lives { get; set; } = 3;
 
+    private Player _target;
+
     /// <summary>
     /// CanvasLayerの管理用ディクショナリ
     /// </summary>
@@ -42,6 +45,11 @@ public partial class Common : Node
         ScreenSize = GetViewport().GetVisibleRect().Size;
         
         _canvasLayers = new Dictionary<string, CanvasLayer>();
+    }
+
+    public void SetTarget(Player target)
+    {
+        _target = target;
     }
 
     public void AddLayer(string name, CanvasLayer layer)
@@ -247,5 +255,13 @@ public partial class Common : Node
         GD.Print($"================");
     }
 
-    
+    public static Vector2 AngleToVector2(float degree, float speed)
+    {
+        // 角度をラジアンに変換.
+        var rad = degree * Math.PI / 180;
+        return new Vector2(
+            (float)Math.Cos(rad) * speed, 
+            (float)Math.Sin(rad) * -speed
+        );
+    }
 }

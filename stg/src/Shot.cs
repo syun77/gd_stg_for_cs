@@ -4,6 +4,11 @@ using System;
 public partial class Shot : Area2D
 {
 	public Vector2 velocity = Vector2.Zero;
+
+	public void	SetSpeed(float degree, float speed)
+    {
+        velocity = Common.AngleToVector2(degree, speed);
+    }
 	public override void _Ready()
     {
     }

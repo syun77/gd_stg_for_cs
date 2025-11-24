@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://blkptshk11xaj"]
+[gd_scene load_steps=5 format=3 uid="uid://blkptshk11xaj"]
 
 [ext_resource type="PackedScene" uid="uid://cbqkwdkfgor1d" path="res://src/Player.tscn" id="1_4gxt3"]
 [ext_resource type="Script" uid="uid://okslahh3ev01" path="res://src/Main.cs" id="1_hk4rc"]
+[ext_resource type="FontFile" uid="uid://dmgj84t8il5ck" path="res://assets/fonts/Xolonium-Regular.ttf" id="3_chrbn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5qjmp"]
+font = ExtResource("3_chrbn")
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_hk4rc")
@@ -20,3 +24,5 @@ position = Vector2(240, 608)
 [node name="Label" type="Label" parent="CanvasUI"]
 offset_right = 40.0
 offset_bottom = 23.0
+text = "SHOT: 1"
+label_settings = SubResource("LabelSettings_5qjmp")

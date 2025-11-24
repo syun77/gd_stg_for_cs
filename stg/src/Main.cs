@@ -10,6 +10,9 @@ public partial class Main : Node2D
     /// </summary>
 	public override void _Ready()
     {
+		// ターゲットを登録.
+		Common.Instance.SetTarget(GetNode<Player>("Player"));
+
 		// 各種レイヤーを登録.
 		Common.Instance.AddLayer("shot", GetNode<CanvasLayer>("ShotLayer"));
 		Common.Instance.AddLayer("enemy", GetNode<CanvasLayer>("EnemyLayer"));
