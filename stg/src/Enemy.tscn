@@ -1,11 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://cvge8tywbcyet"]
+[gd_scene load_steps=5 format=3 uid="uid://cvge8tywbcyet"]
 
 [ext_resource type="Texture2D" uid="uid://doyytobv4ysss" path="res://assets/images/enemy.png" id="1_7rj6k"]
+[ext_resource type="Script" uid="uid://dg8kbb61qn8py" path="res://src/Enemy.cs" id="1_rnh5k"]
+[ext_resource type="PackedScene" uid="uid://pc0kc8hsafdt" path="res://src/Bullet.tscn" id="2_5x67w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7rj6k"]
 size = Vector2(32, 32)
 
 [node name="Enemy" type="Area2D"]
+script = ExtResource("1_rnh5k")
+BulletScene = ExtResource("2_5x67w")
 
 [node name="Enemy" type="Sprite2D" parent="."]
 texture = ExtResource("1_7rj6k")

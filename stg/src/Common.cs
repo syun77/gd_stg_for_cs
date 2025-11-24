@@ -51,6 +51,13 @@ public partial class Common : Node
     {
         _target = target;
     }
+    public float GetAim(Vector2 pos)
+    {
+        var v = _target.Position - pos;
+        var d = Math.Atan2(-v.Y, v.X);
+        // ラジアンを角度に変換する.
+        return (float)(d * 180.0 / Math.PI);
+    }
 
     public void AddLayer(string name, CanvasLayer layer)
     {

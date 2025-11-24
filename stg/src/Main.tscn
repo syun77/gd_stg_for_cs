@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://blkptshk11xaj"]
+[gd_scene load_steps=6 format=3 uid="uid://blkptshk11xaj"]
 
 [ext_resource type="PackedScene" uid="uid://cbqkwdkfgor1d" path="res://src/Player.tscn" id="1_4gxt3"]
 [ext_resource type="Script" uid="uid://okslahh3ev01" path="res://src/Main.cs" id="1_hk4rc"]
+[ext_resource type="PackedScene" uid="uid://cvge8tywbcyet" path="res://src/Enemy.tscn" id="3_5qjmp"]
 [ext_resource type="FontFile" uid="uid://dmgj84t8il5ck" path="res://assets/fonts/Xolonium-Regular.ttf" id="3_chrbn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5qjmp"]
@@ -16,6 +17,9 @@ position = Vector2(240, 608)
 [node name="ShotLayer" type="CanvasLayer" parent="."]
 
 [node name="EnemyLayer" type="CanvasLayer" parent="."]
+
+[node name="Enemy" parent="EnemyLayer" instance=ExtResource("3_5qjmp")]
+position = Vector2(240, 168)
 
 [node name="BulletLayer" type="CanvasLayer" parent="."]
 
