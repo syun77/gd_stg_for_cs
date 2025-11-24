@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bgfgoytadswpb"]
+
+[ext_resource type="Texture2D" uid="uid://doyytobv4ysss" path="res://assets/images/enemy.png" id="1_uq43q"]
+[ext_resource type="Script" uid="uid://sxfaarajh3bk" path="res://src/Boss.cs" id="1_vpv0n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uq43q"]
+size = Vector2(112, 112)
+
+[node name="Boss" type="Area2D"]
+script = ExtResource("1_vpv0n")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+modulate = Color(0.5709799, 0.5709799, 0.5709799, 1)
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("1_uq43q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+modulate = Color(0.7162962, 0.7162962, 0.7162962, 1)
+shape = SubResource("RectangleShape2D_uq43q")
+
+[connection signal="area_entered" from="." to="." method="OnAreaEntered"]

@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime;
 
 /// <summary>
@@ -8,6 +9,16 @@ using System.Runtime;
 /// </summary>
 public partial class Enemy : Area2D
 {
+	private static readonly PackedScene ENEMY_SCENE = GD.Load<PackedScene>("res://src/Enemy.tscn");
+
+	public static void Add(Vector2 pos, int id, float deg, float speed)
+    {
+        var e = ENEMY_SCENE.Instantiate<Enemy>();
+		e.Initilalize(pos, id, deg, speed);
+		Common.Instance.AddLayerChild("enemy", e);        
+    }
+
+
 	class DelayedBatteryInfo
     {
 		public float deg = 0; // 角度.
@@ -50,9 +61,18 @@ public partial class Enemy : Area2D
 	List<DelayedBatteryInfo> _batteries = new List<DelayedBatteryInfo>();
 
 	private float _timer;
+	private int _id;
+	public Vector2 velocity = Vector2.Zero;
 	public override void _Ready()
 	{
 	}
+
+	public void Initilalize(Vector2 pos, int id, float deg, float speed)
+    {
+        Position = pos;
+		_id = id;
+		velocity = Common.AngleToVector2(deg, speed);
+    }
 
 	/// <summary>
     /// 固定時間で更新.
@@ -60,6 +80,9 @@ public partial class Enemy : Area2D
     /// <param name="delta"></param>
 	public override void _PhysicsProcess(double delta)
     {
+		velocity *= 0.95f;
+		Position += velocity * (float)delta;
+
         _timer += (float)delta;
 		if(_timer > 3)
         {
@@ -74,6 +97,12 @@ public partial class Enemy : Area2D
 
 		// 発射リストを更新する.
 		_UpdateBatteries((float)delta);
+
+		if(Common.Instance.IsInScreen(Position, 16) == false)
+        {
+			// 画面外.
+            QueueFree();
+        }
     }
 
 	private float _GetAim()
