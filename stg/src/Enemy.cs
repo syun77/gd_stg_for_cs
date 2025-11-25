@@ -1,8 +1,10 @@
 using Godot;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime;
+using System.Threading;
 
 /// <summary>
 /// 敵弾クラス.
@@ -61,7 +63,13 @@ public partial class Enemy : Area2D
 	List<DelayedBatteryInfo> _batteries = new List<DelayedBatteryInfo>();
 
 	private float _timer;
+	private float _destroyTimer;
+	private int _step;
+	private int _cnt;
+	private float _wait;
 	private int _id;
+	private int _hp;
+	private float _decayVelocity = 0.95f;
 	public Vector2 velocity = Vector2.Zero;
 	public override void _Ready()
 	{
@@ -72,6 +80,20 @@ public partial class Enemy : Area2D
         Position = pos;
 		_id = id;
 		velocity = Common.AngleToVector2(deg, speed);
+
+		var size_tbl = new float[] {0, 1,  1,  0.3f, 1,  1,  1};
+		var hp_tbl   = new int[]   {0, 8,  10, 5,    10, 10, 10};
+		var dst_tbl  = new int[]   {0, 5,  10, 8,    10, 9,  10};
+
+        _hp = hp_tbl[_id];
+		var size = size_tbl[_id];
+		Scale = new Vector2(size, size);
+		_destroyTimer = dst_tbl[_id];
+	}
+
+	private void Wait(float t)
+    {
+        _wait = t;
     }
 
 	/// <summary>
@@ -80,19 +102,34 @@ public partial class Enemy : Area2D
     /// <param name="delta"></param>
 	public override void _PhysicsProcess(double delta)
     {
-		velocity *= 0.95f;
+		velocity *= _decayVelocity;
 		Position += velocity * (float)delta;
 
-        _timer += (float)delta;
-		if(_timer > 3)
-        {
-            _timer -= 3;
-
-			// 3回ループする
-			for(int i = 0; i < 5; i++)
-            {
-				_NWay(3, _GetAim(), 30, 100 + (i * 20), i*0.2f);
-            }
+		_timer += (float)delta;
+		_wait -= (float)delta;
+		if(_wait <= 0)
+        {            
+			switch(_id)
+			{
+			case 1:
+				_ai_01();
+				break;
+			case 2:
+				_ai_02();
+				break;
+			case 3:
+				_ai_03();
+				break;
+			case 4:
+				_ai_04();
+				break;
+			case 5:
+				_ai_05();
+				break;
+			case 6:
+				_ai_06();
+				break;
+			}
         }
 
 		// 発射リストを更新する.
@@ -103,6 +140,154 @@ public partial class Enemy : Area2D
 			// 画面外.
             QueueFree();
         }
+		else if(_timer >= _destroyTimer)
+        {
+            // 自爆.
+			QueueFree();
+        }	
+    }
+
+	private void _ai_01()
+    {
+		// 高速狙い撃ち弾を撃つ
+		switch(_step)
+        {
+		case 0:
+			Wait(1);
+			_step++;
+			break;
+		case 1:
+			for (int i = 0; i < 5; i++)
+			{
+				_Aim(700, i * 0.05f);
+			}
+			Wait(0.8f);
+			break;
+        }
+    }
+	private void _ai_02()
+    {
+		// 両サイドから攻撃する
+		switch (_step)
+        {
+		case 0:
+			Wait(1);
+			_step++;
+			break;
+		case 1:
+			_decayVelocity = 1.001f; // 速度減衰無効
+			velocity = new Vector2(0, 100);
+			_step++;
+			break;
+		case 2:
+			var dir = 0-20;
+			if (Position.X > Common.Instance.ScreenSize.X/2)
+            {
+				dir = 180+20;
+            }
+			for (int i = 0; i < 16; i++)
+			{
+				_Bullet(dir, 500, i * 0.03f);
+			}
+			Wait(1);
+			break;
+		}
+    }
+	private void _ai_03()
+    {
+		// 狙い撃ち弾
+		switch (_step)
+        {
+		case 0:
+			Wait(2);
+			_step++;
+			break;
+		case 1:
+			for (int i = 0; i < 5; i++)
+			{
+				_Aim(300);
+			}
+			Wait(1.5f);
+			break;
+        }
+    }
+	private void _ai_04()
+    {
+		// ワインダー
+		switch (_step)
+        {
+		case 0:
+			Wait(2);
+			_step++;
+			break;
+		case 1:
+			_cnt = 0;
+			_step++;
+			break;
+		case 2:
+			var dir = 270 + 20 * Mathf.Sin(Common.Deg2Rad(_cnt * 4));
+			_Bullet(dir, 500);
+			_cnt++;
+			Wait(0.05f);
+			break;
+		}
+    }
+	private	void _ai_05()
+    {
+        // ウィップ弾.
+		switch (_step)
+		{
+		case 0:
+			Wait(2);
+			_step++;
+			break;
+		case 1:
+			_cnt = 3;
+			_step++;
+			break;
+		case 2:
+			var dir = _GetAim();
+			for (int i = 0; i < _cnt + 2; i++)
+			{
+				_NWay(_cnt, dir, 60, 300 + (50 * i), 0.02f * i * _cnt);
+			}
+			Wait(2);
+			_cnt++;
+			break;
+        }
+    }
+	private void _ai_06()
+    {
+		// 回転弾
+		switch (_step)
+		{
+		case 0:
+			Wait(2);
+			_step++;
+			break;
+		case 1:
+			_cnt = 0; // 横から開始
+			_step++;
+			break;
+		case 2:
+			Wait(0.05f);
+			_step++;
+			break;
+		case 3:
+			var d = 8; // 回転速度
+			_Bullet(_cnt, 200);
+			_Bullet(_cnt+180, 200);
+			if (Position.X < Common.Instance.ScreenSize.X/2)
+            {
+				_cnt += d;
+            }
+			else
+            {
+				_cnt -= d;
+            }
+			_step = 2;
+			break;
+		}   
     }
 
 	private float _GetAim()
@@ -127,6 +312,11 @@ public partial class Enemy : Area2D
             }
 		}
 		_batteries = tmp;
+    }
+
+	private void _Aim(float speed, float delay=0, float ax=0, float ay=0)
+    {
+        _Bullet(_GetAim(), speed, delay, ax, ay);
     }
 
 	private void _Bullet(float deg, float speed, float delay=0, float ax=0, float ay=0)
@@ -177,9 +367,9 @@ public partial class Enemy : Area2D
 
 	private void OnAreaEntered(Area2D target)
 	{
-		if(target is Shot)
+		var obj = target as Shot;
+		if(obj != null)
         {
-			var obj = target as Shot;
 			var deg = Common.ToAngle(obj.velocity);
 			deg -= 180 + Common.RandFRange(-30, 30);
 			var speed = Common.ToSpeed(obj.velocity);

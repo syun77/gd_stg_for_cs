@@ -292,4 +292,9 @@ public partial class Common : Node
     {
         return (float)(Random.Shared.NextDouble() * (bMax - aMin) + aMin);
     }
+    // 度をラジアンに変換.
+    public static float Deg2Rad(float degree)
+    {
+        return degree * (float)Math.PI / 180.0f;
+    }
 }

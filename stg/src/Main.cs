@@ -25,6 +25,7 @@ public partial class Main : Node2D
 	public override void _Process(double delta)
     {
 		_text.Text = "Shot: " + Common.Instance.GetLayerChildCount("shot").ToString();
+		_text.Text += "\nEnemy: " + Common.Instance.GetLayerChildCount("enemy").ToString();
 		_text.Text += "\nBullet: " + Common.Instance.GetLayerChildCount("bullet").ToString();
 		_text.Text += "\nParticle: " + Common.Instance.GetLayerChildCount("particle").ToString();
     }
