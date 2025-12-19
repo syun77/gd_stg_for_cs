@@ -81,9 +81,9 @@ public partial class Enemy : Area2D
 		_id = id;
 		velocity = Common.AngleToVector2(deg, speed);
 
-		var size_tbl = new float[] {0, 1,  1,  0.3f, 1,  1,  1};
-		var hp_tbl   = new int[]   {0, 8,  10, 5,    10, 10, 10};
-		var dst_tbl  = new int[]   {0, 5,  10, 8,    10, 9,  10};
+		var size_tbl = new float[] {0, 1,  1,  0.3f, 1,  1,  1}; // サイズ.
+		var hp_tbl   = new int[]   {0, 8,  10, 5,    10, 10, 10}; // HP.
+		var dst_tbl  = new int[]   {0, 5,  10, 8,    10, 9,  10}; // 自爆タイマー.
 
         _hp = hp_tbl[_id];
 		var size = size_tbl[_id];
